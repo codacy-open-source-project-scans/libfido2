@@ -1,6 +1,6 @@
 #!/bin/sh -eux
 
-# Copyright (c) 2020-2022 Yubico AB. All rights reserved.
+# Copyright (c) 2020-2024 Yubico AB. All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 # SPDX-License-Identifier: BSD-2-Clause
@@ -10,9 +10,9 @@ LIBCBOR_TAG="v0.10.2"
 LIBCBOR_ASAN="address alignment bounds"
 LIBCBOR_MSAN="memory"
 OPENSSL_URL="https://github.com/openssl/openssl"
-OPENSSL_TAG="openssl-3.0.12"
+OPENSSL_TAG="openssl-3.0.13"
 ZLIB_URL="https://github.com/madler/zlib"
-ZLIB_TAG="v1.3"
+ZLIB_TAG="v1.3.1"
 ZLIB_ASAN="address alignment bounds undefined"
 ZLIB_MSAN="memory"
 FIDO2_ASAN="address bounds fuzzer-no-link implicit-conversion leak"

@@ -1,6 +1,6 @@
 #!/bin/sh -eux
 
-# Copyright (c) 2022-2023 Yubico AB. All rights reserved.
+# Copyright (c) 2022-2024 Yubico AB. All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 # SPDX-License-Identifier: BSD-2-Clause
@@ -42,7 +42,7 @@ sudo make install_sw
 cd ..
 
 # Build and install zlib.
-git clone --depth=1 https://github.com/madler/zlib -b v1.3
+git clone --depth=1 https://github.com/madler/zlib -b v1.3.1
 cd zlib
 make -fwin32/Makefile.gcc PREFIX=i686-w64-mingw32-
 sudo make -fwin32/Makefile.gcc PREFIX=i686-w64-mingw32- DESTDIR=/fakeroot \

@@ -1,4 +1,4 @@
-# Copyright (c) 2021-2023 Yubico AB. All rights reserved.
+# Copyright (c) 2021-2024 Yubico AB. All rights reserved.
 # Use of this source code is governed by a BSD-style
 # license that can be found in the LICENSE file.
 # SPDX-License-Identifier: BSD-2-Clause
@@ -17,8 +17,8 @@ New-Variable -Name 'LIBCBOR_GIT' -Value 'https://github.com/pjk/libcbor' `
     -Option Constant
 
 # zlib coordinates.
-New-Variable -Name 'ZLIB' -Value 'zlib-1.3' -Option Constant
-New-Variable -Name 'ZLIB_BRANCH' -Value 'v1.3' -Option Constant
+New-Variable -Name 'ZLIB' -Value 'zlib-1.3.1' -Option Constant
+New-Variable -Name 'ZLIB_BRANCH' -Value 'v1.3.1' -Option Constant
 New-Variable -Name 'ZLIB_GIT' -Value 'https://github.com/madler/zlib' `
     -Option Constant
 

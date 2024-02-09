@@ -1386,12 +1386,47 @@ cbor_decode_assert_authdata(const cbor_item_t *item, fido_blob_t *authdata_cbor,
 static int
 decode_x5c(const cbor_item_t *item, void *arg)
 {
-	fido_blob_t *x5c = arg;
+	fido_blob_array_t *x5c = arg;
+	fido_blob_t *list_ptr = NULL;
+	fido_blob_t x5c_blob;
 
-	if (x5c->len)
-		return (0); /* ignore */
+	memset(&x5c_blob, 0, sizeof(x5c_blob));
 
-	return (fido_blob_decode(item, x5c));
+	if (fido_blob_decode(item, &x5c_blob) < 0) {
+		fido_log_debug("%s: fido_blob_decode", __func__);
+		return (-1);
+	}
+
+	if (x5c->len == SIZE_MAX) {
+		fido_blob_reset(&x5c_blob);
+		return (-1);
+	}
+
+	if ((list_ptr = recallocarray(x5c->ptr, x5c->len,
+	    x5c->len + 1, sizeof(x5c_blob))) == NULL) {
+		fido_blob_reset(&x5c_blob);
+		return (-1);
+	}
+
+	list_ptr[x5c->len++] = x5c_blob;
+	x5c->ptr = list_ptr;
+
+	return (0);
+}
+
+static int
+decode_x5c_array(const cbor_item_t *item, fido_blob_array_t *arr)
+{
+	if (arr->len) {
+		fido_log_debug("%s: dup", __func__);
+		return (-1);
+	}
+	if (cbor_isa_array(item) == false ||
+	    cbor_array_is_definite(item) == false) {
+		fido_log_debug("%s: cbor", __func__);
+		return (-1);
+	}
+	return (cbor_array_iter(item, arr, decode_x5c));
 }
 
 static int
@@ -1427,9 +1462,7 @@ decode_attstmt_entry(const cbor_item_t *key, const cbor_item_t *val, void *arg)
 			goto out;
 		}
 	} else if (!strcmp(name, "x5c")) {
-		if (cbor_isa_array(val) == false ||
-		    cbor_array_is_definite(val) == false ||
-		    cbor_array_iter(val, &attstmt->x5c, decode_x5c) < 0) {
+		if (decode_x5c_array(val, &attstmt->x5c)) {
 			fido_log_debug("%s: x5c", __func__);
 			goto out;
 		}
