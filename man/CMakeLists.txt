@@ -186,6 +186,9 @@ list(APPEND MAN_ALIAS
 	fido_cred_new fido_cred_user_id_ptr
 	fido_cred_new fido_cred_user_name
 	fido_cred_new fido_cred_x5c_len
+	fido_cred_new fido_cred_x5c_list_count
+	fido_cred_new fido_cred_x5c_list_len
+	fido_cred_new fido_cred_x5c_list_ptr
 	fido_cred_new fido_cred_x5c_ptr
 	fido_cred_verify fido_cred_verify_self
 	fido_credman_metadata_new fido_credman_del_dev_rk
@@ -393,7 +396,7 @@ if(GZIP_PATH)
 		install(FILES ${PROJECT_BINARY_DIR}/man/${DST}.3.gz
 			DESTINATION "${CMAKE_INSTALL_MANDIR}/man3")
 	endforeach()
-elseif(NOT MSVC)
+else()
 	add_dependencies(man man_symlink)
 	foreach(f ${MAN_SOURCES})
 		if (${f} MATCHES ".1$")
